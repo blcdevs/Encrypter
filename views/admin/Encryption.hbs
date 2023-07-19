@@ -1,0 +1,305 @@
+{{>header}}
+
+
+<div class="app-wrapper">
+
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+
+            <h1 class="app-page-title">Encryption
+                <p class="float-right ml-3" data-placement="top" data-toggle="tooltip" title="Encrypt Text">
+                    <button class="btn btn-secondary btn-xs text-white" data-title="Encrypt Text" data-toggle="modal"
+                        data-target="#encryptMedia">
+                        <i class="fa-regular fa-video-camera"></i>
+                        Encrypt Audio/Video
+                    </button>
+                </p>
+                <p class="float-right ml-3" data-placement="top" data-toggle="tooltip" title="Encrypt Text">
+                    <button class="btn btn-secondary btn-xs text-white" data-title="Encrypt Text" data-toggle="modal"
+                        data-target="#encryptFiles">
+                        <i class="fa-regular fa-volume-up"></i>
+                        Encrypt Files
+                    </button>
+                </p>
+                <p class="float-right" data-placement="top" data-toggle="tooltip" title="Encrypt Text">
+                    <button class="btn btn-secondary btn-xs text-white" data-title="Encrypt Text" data-toggle="modal"
+                        data-target="#encryptText">
+                        <i class="fa-regular fa-pencil-square"></i>
+                        Encrypt Text
+                    </button>
+                </p>
+            </h1>
+
+            <hr class="mb-4">
+            {{#if encryptionrecord}}
+            <div class="alert alert-success flashmsg" role="alert">
+                <b>Your Encrption Details are:</b><br />
+                {{#ifEquals encryptionrecord.0.fileType 1}}
+                <b>Raw Text: </b>{{encryptionrecord.0.data}}<br />
+                {{/ifEquals}}
+                <b>Elgamal: </b>{{encryptionrecord.0.elgamal}}<br />
+                <b>AES: </b>{{encryptionrecord.0.aes}}<br />
+                <b>SHA512: </b>{{encryptionrecord.0.sha512}}<br />
+                <b>Masked: </b>{{encryptionrecord.0.masked}}
+            </div>
+            {{/if}}
+            {{#if decryptionrecord}}
+            <div class="alert alert-danger flashmsg" role="alert">
+                {{#ifEquals decryptionrecord.0.fileType 1}}
+                <b>Your Decrypted Value is:</b>
+                <br />{{decryptionrecord.0.data}}
+                {{/ifEquals}}
+                {{#ifNot decryptionrecord.0.fileType 1}}
+                <b>File download started successfully</b>
+                {{/ifNot}}
+            </div>
+            {{/if}}
+            {{#if errors}}
+            {{#each errors}}
+            <div class="alert alert-danger flashmsg" role="alert">{{this.msg}}</div>
+            {{/each}}
+            {{/if}}
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="body">
+                            <div class="table-responsive" style="width:100%; padding:20px">
+                                <table id="dataTables" class="table table-striped table-bordered" cellspacing="0"
+                                    cellpadding="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Encryption Date</th>
+                                            <th>Masked Data</th>
+                                            <th>File Type</th>
+                                            <th>Total Access</th>
+                                            <th>Unmask</th>
+                                            <th>View Access</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Encryption Date</th>
+                                            <th>Masked Data</th>
+                                            <th>File Type</th>
+                                            <th>Total Access</th>
+                                            <th>Unmask</th>
+                                            <th>View Access</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {{#each encryption}}
+                                        <tr>
+                                            <td>{{date_time this.createdAt}}</td>
+                                            <td>
+                                                <p title="{{this.masked}}">{{str_length this.masked}}</p>
+                                            </td>
+                                            <td>
+                                                {{#ifEquals this.fileType 1}}
+                                                Text
+                                                {{else ifEquals this.fileType 2}}
+                                                Files
+                                                {{else ifEquals this.fileType 3}}
+                                                Audio/Video (media)
+                                                {{/ifEquals}}
+                                            </td>
+                                            <td>{{count this.FileAccess}}</td>
+                                            <td>
+                                                <p data-placement="top" data-toggle="tooltip" title={{#ifEquals
+                                                    this.fileType 1}}"Unmask Data"{{/ifEquals}}{{#ifNot this.fileType
+                                                    1}}"Download file"{{/ifNot}}>
+                                                    <a href="/account/file-decryption/{{this.textUniqueID}}"
+                                                        class="btn btn-primary btn-xs">
+                                                        <i class={{#ifEquals this.fileType 1}}"fa-regular
+                                                            fa-eye"{{/ifEquals}}{{#ifNot this.fileType 1}}"fa-regular
+                                                            fa-cloud-download"{{/ifNot}} style="color: #fff;"></i>
+                                                    </a>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p data-placement="top" data-toggle="tooltip" title="View Access">
+                                                    <a href="/account/file-encryption/users/{{this.textUniqueID}}"
+                                                        class="btn btn-primary btn-xs">
+                                                        <i class="fa-regular fa-users" style="color: #fff;"></i>
+                                                    </a>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p data-placement="top" data-toggle="tooltip" title="Delete"><button
+                                                        class="btn btn-danger btn-xs" data-title="Delete"
+                                                        data-toggle="modal"
+                                                        data-target="#deleteModal{{this.textUniqueID}}">
+                                                        <i class="fa-regular fa-trash-can" style="color: #fff;"></i>
+                                                    </button></p>
+                                            </td>
+                                        </tr>
+                                        {{!-- <div class="modal fade" id="actionModal{{this.textUniqueID}}"
+                                            tabindex="-1" role="dialog" aria-labelledby="actionModalTitle"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="alert alert-danger">
+                                                            <span class="glyphicon glyphicon-warning-sign"></span>
+                                                            Are you sure you want to delete this encryption?
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="btn btn-success text-white"
+                                                            href="/account/delete/file-encryption/{{this.textUniqueID}}">
+                                                            <i class="fa-regular fa-circle-check"></i>
+                                                            Yes
+                                                        </a>
+                                                        <button type="button" class="btn btn-danger text-white"
+                                                            data-dismiss="modal">
+                                                            <i class="fa-regular fa-xmark"></i>
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="modal fade" id="deleteModal{{this.textUniqueID}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="alert alert-danger">
+                                                            <span class="glyphicon glyphicon-warning-sign"></span>
+                                                            Are you sure you want to delete this encryption file?
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="btn btn-success text-white"
+                                                            href="/account/delete/file-encryption/{{this.textUniqueID}}">
+                                                            <i class="fa-regular fa-circle-check"></i>
+                                                            Yes
+                                                        </a>
+                                                        <button type="button" class="btn btn-danger text-white"
+                                                            data-dismiss="modal">
+                                                            <i class="fa-regular fa-xmark"></i>
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Table -->
+            <div class="modal fade" id="encryptText" tabindex="-1" role="dialog" aria-labelledby="addModalTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form class="settings-form" action="/account/file-encryption" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                    Encrypt Text
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="setting-input-2" class="form-label">
+                                        Text
+                                    </label>
+                                    <textarea type="text" class="form-control" rows="8" name="encryptTextData"
+                                        placeholder="Enter Text to Encrypt"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn app-btn-primary">Encrypt</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="encryptFiles" tabindex="-1" role="dialog" aria-labelledby="addModalTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+
+                        <form class="settings-form" action="/account/file-encryption" method="post"
+                            enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                    Encrypt Files File
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="setting-input-2" class="form-label">
+                                        Upload Files file
+                                    </label>
+                                    <input type="file" class="form-control" required name="uploadFile"
+                                        accept="application/pdf,application/msword,image/png,image/jpg,image/jpeg">
+                                </div>
+                                <div class="invisible">
+                                    <input type="number" class="form-control" name="fileType" value="2" readonly />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn app-btn-primary">Encrypt</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="encryptMedia" tabindex="-1" role="dialog" aria-labelledby="addModalTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+
+                        <form class="settings-form" action="/account/file-encryption" method="post"
+                            enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                    Encrypt Media File
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="setting-input-2" class="form-label">
+                                        Upload Media file
+                                    </label>
+                                    <input type="file" class="form-control" required name="uploadFile"
+                                        accept="audio/mp3,video/mp4">
+                                </div>
+                                <div class="invisible">
+                                    <input type="number" class="form-control" name="fileType" value="3" readonly />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn app-btn-primary">Encrypt</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{>footer}}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>{{title}} | Encryptor</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="{{title}} | Encryptor">
+    <meta name="author" content="Encryptor">    
+    <link rel="icon" href="../../images/app-logo.png" type="image/x-icon">
+    
+    <!-- FontAwesome JS-->
+    <script defer src="../../plugins/fontawesome/js/all.min.js"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="../../css/portal.css">
+
+</head> 
+
+    {{#if success}} 
+        <div class="alert alert-success alert-dismissable flashmsg" style="width: 30%;position: fixed;top: 5%;left: 50%;transform: translate(-50%, -50%); z-index: 999999;">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <a class="alert-link" href="#">Success: </a>{{ success }}        
+        </div>
+    {{/if}}
+    
+    {{#if return}} 
+        <div class="alert alert-danger alert-dismissable flashmsg" style="width: 30%;position: fixed;top: 5%;left: 50%;transform: translate(-50%, -50%); z-index: 999999;">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <a class="alert-link" href="#">Warning: </a>{{ return }}        
+        </div>
+    {{/if}}

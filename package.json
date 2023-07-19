@@ -1,0 +1,46 @@
+{
+  "name": "encryptor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "setup": "npx sequelize-cli db:migrate;npx sequelize-cli db:seed:all",
+    "update": "npm install;npx sequelize-cli db:migrate",
+    "reinstall": "npx sequelize-cli db:seed:undo;npx sequelize-cli db:migrate:undo;npx sequelize-cli db:migrate;npx sequelize-cli db:seed:all",
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "devBen",
+  "license": "ISC",
+  "dependencies": {
+    "@supercharge/strings": "^1.29.0",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.1",
+    "express-useragent": "^1.0.15",
+    "express-validator": "^5.3.1",
+    "hbs": "^4.0.1",
+    "helmet": "^4.6.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^2.2.5",
+    "nodemailer": "^4.1.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.4.0",
+    "timeago.js": "^4.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.2",
+    "faker": "^5.1.0",
+    "nodemon": "^2.0.19",
+    "sequelize-cli": "^6.2.0"
+  }
+}

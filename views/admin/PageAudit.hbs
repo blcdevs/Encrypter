@@ -1,0 +1,56 @@
+{{>header}}
+
+<div class="app-wrapper">
+
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+
+            <h1 class="app-page-title">Page Audit</h1>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="body">
+                            <div class="table-responsive" style="width:100%; padding:20px">
+                                <table id="dataTables" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>LogIn Date</th>
+                                            <th>IP Address</th>
+                                            <th>Browser Agent</th>
+                                            <th>Page Route</th>
+                                            <th>Action Performed</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>LogIn Date</th>
+                                            <th>IP Address</th>
+                                            <th>Browser Agent</th>
+                                            <th>Page Route</th>
+                                            <th>Action Performed</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {{#each pageAudit}}
+                                        <tr>
+                                            <td>{{fullDateTime this.createdAt}}</td>
+                                            <td>{{this.ipAddress}}</td>
+                                            <td>{{this.browserAgent}}</td>
+                                            <td>{{this.pageRoute}}</td>
+                                            <td>{{this.actionPerformed}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Table -->
+        </div>
+
+    </div>
+</div>
+
+{{>footer}}

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "encrypter",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "encryptor",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sql8633656",
+    "password": "9de4msVgxU",
+    "database": "sql8633656",
+    "host": "sql8.freesqldatabase.com",
+    "dialect": "mysql"
+  }
+}
