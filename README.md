@@ -1,33 +1,48 @@
 # Encrypter
 
-Encrypter is a web application that allows you to encrypt and decrypt files securely. It provides an easy-to-use interface for encrypting your sensitive data. This readme guide will walk you through the setup process and explain how to use the application effectively.
+Go to your browser and visit 
 
-## Installation
+localhost:3000
 
-To get started, follow these steps:
+I believe it was encryptor or so
 
-1. Open your browser and visit `localhost:3000`.
-2. Make sure you have the necessary dependencies installed and configured.
-3. Clone the repository to your local machine.
-4. Navigate to the project directory.
+There are 2 ways to create a database
 
-## Database Setup
+You can click on the database on the image to do that using the GUI
 
-There are two ways to create a database for Encrypter:
+Writing the query may be a bit tasking for you via chat
 
-1. GUI: Click on the database image in the application to create a database using the graphical user interface.
-2. Manual: If you prefer, you can create the database using SQL queries. However, this method requires more technical knowledge.
+Oh it’s encrypter not encryptor
 
-To create the database manually:
+Then send me the content in the folder
 
-1. Open the notepad file named `encrypter.txt`.
-2. Modify the content of the file to match your desired database name (e.g., "encrypter").
-3. Save the changes and rename the notepad file to `encrypter.sql`.
-4. If you have received an `encrypter.sql` file from someone, skip this step.
+If you’ve created the db you can change it in the notepad and save
 
-If you haven't received an `encrypter.sql` file, you need to run the database migration to load the necessary data:
+Then change the notepad to encrypter
 
-1. Open the command prompt.
-2. Navigate to the project directory using the `cd` command.
-3. Type `ls` to list the files in the directory.
-4. Run the following command to migrate the database:
+You can edit the DB name but so we don’t stress just change the notepad content
+
+From the phpmyadmin but don’t bother about that
+
+Just change the notepad name to what you used as the db name which is encrypter
+
+Is there a file with a .sql in it
+
+If I didn’t send that to you then you need to run the DB migrate to load the seeds into the data base
+
+Command prompt
+
+Shift + Ctl + right mouse button
+
+You can press this in the directory
+
+Or just open command prompt and go into the directory
+
+But before that, type ls
+
+You can run the other command
+
+## After this, run this command npx sequelize-cli db:migrate
+## After running this command, run this npx sequelize-cli db:seed:all
+
+Then you can run npm start to run the app.
